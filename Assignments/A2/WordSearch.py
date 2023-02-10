@@ -11,8 +11,18 @@ def isValid(mat, x, y, path):
 
 
 def DFS(mat, word, i, j, path=[], index=0):
+    # return if characters don't match
+    if mat[i][j] != word[index]:
+        return None
+    path.append((i, j))
+    if index == len(word) - 1:
+        print(path)
+    else:
+        for z in range(len(row)):
+            if isValid(mat, i + row[z], j + col[z], path):
+                DFS(mat, word, i + row[z], j + col[z], path, index + 1)
+    path.pop()
 
-	# Start writing from here
 
 
 def WordSearch(mat, word):
