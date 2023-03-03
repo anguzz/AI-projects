@@ -2,6 +2,9 @@ from logic import *
 
 colors = ["red", "blue", "green", "purple"]
 symbols = []
+
+colorsLen=len(colors)
+
 for i in range(4):
     for color in colors:
         symbols.append(Symbol(f"{color}{i}"))
@@ -18,16 +21,37 @@ for color in colors:
     ))
 
 # Only one position per color.
-
+for color in colors:
+    for p1 in range(colorsLen):
+        for p2 in range(colorsLen):
+            if p1 != p2:
+                knowledge.add(Implication(Symbol(f"{color}{p1}"), Not(Symbol(f"{color}{p2}")) ))
 
 # Only one color per position.
-
+for i in range(colorsLen):
+    for c1 in colors:
+        for c2 in colors:
+            if c1 != c2:
+                knowledge.add(Implication(Symbol(f"{c1}{i}"), Not(Symbol(f"{c2}{i}"))))
 
 # First Guess
-knowledge.add()
+knowledge.add(Or(
+    And(Symbol("red0"), Symbol("blue1"), Not(Symbol("green2")), Not(Symbol("purple3"))),
+    And(Symbol("red0"), Symbol("green2"), Not(Symbol("blue1")), Not(Symbol("purple3"))),
+    And(Symbol("red0"), Symbol("purple3"), Not(Symbol("blue1")), Not(Symbol("green2"))),
+    And(Symbol("blue1"), Symbol("green2"), Not(Symbol("red0")), Not(Symbol("purple3"))),
+    And(Symbol("blue1"), Symbol("purple3"), Not(Symbol("red0")), Not(Symbol("green2"))),
+    And(Symbol("green2"), Symbol("purple3"), Not(Symbol("red0")), Not(Symbol("blue1")))
+))
+
 
 # Second Guess
-knowledge.add()
+knowledge.add(And(
+    Not(Symbol("blue0")),
+    Not(Symbol("red1")),
+    Not(Symbol("green2")),
+    Not(Symbol("purple3"))
+))
 
 for symbol in symbols:
     if model_check(knowledge, symbol):
