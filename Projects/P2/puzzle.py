@@ -12,21 +12,32 @@ CLieosaurus = Symbol("C is a Lieosaurus")
 # Puzzle 0
 # A says "I am both a Truthoraptor and a Lieosaurus."
 knowledge0 = And(
-    # TODO
+And(Or(ALieosaurus,ATruthoraptor),
+Not(And(ALieosaurus,ATruthoraptor))),
+Implication(ALieosaurus,Not(And(ATruthoraptor,ALieosaurus))),
+Implication(ATruthoraptor,(And(ATruthoraptor,ALieosaurus)))
 )
 
 # Puzzle 1
 # A says "We are both Lieosauruss."
 # B says nothing.
 knowledge1 = And(
-    # TODO
+And(Or(ALieosaurus,ATruthoraptor), Not(And(ALieosaurus,ATruthoraptor))),
+And(Or(BLieosaurus,BTruthoraptor), Not(And(BLieosaurus,BTruthoraptor))),
+Implication(ALieosaurus,Not(And(ALieosaurus,BLieosaurus))),
+Implication(ATruthoraptor,(And(ALieosaurus,BLieosaurus)))
 )
 
 # Puzzle 2
 # A says "We are the same kind."
 # B says "We are of different kinds."
 knowledge2 = And(
-    # TODO
+And(Or(ALieosaurus,ATruthoraptor), Not(And(ALieosaurus,ATruthoraptor))),
+And(Or(BLieosaurus,BTruthoraptor), Not(And(BLieosaurus,BTruthoraptor))),
+Implication(ATruthoraptor,Or(And(ALieosaurus,BLieosaurus),And(ATruthoraptor,BTruthoraptor))),
+Implication(ALieosaurus,Not(Or(And(ALieosaurus,BLieosaurus),And(ATruthoraptor,BTruthoraptor)))),
+Implication(BTruthoraptor,Or(And(ALieosaurus,BTruthoraptor),And(BLieosaurus,ATruthoraptor))),
+Implication(BLieosaurus,Not(Or(And(ALieosaurus,BTruthoraptor),And(BLieosaurus,ATruthoraptor))))
 )
 
 # Puzzle 3
@@ -35,7 +46,15 @@ knowledge2 = And(
 # B says "C is a Lieosaurus."
 # C says "A is a Truthoraptor."
 knowledge3 = And(
-    # TODO
+And(Or(ALieosaurus,ATruthoraptor), Not(And(ALieosaurus,ATruthoraptor))),
+And(Or(BLieosaurus,BTruthoraptor), Not(And(BLieosaurus,BTruthoraptor))),
+And(Or(CLieosaurus,CTruthoraptor), Not(And(CLieosaurus,CTruthoraptor))),
+Implication(BLieosaurus,Not(CLieosaurus)),
+Implication(BTruthoraptor,CLieosaurus),
+Implication(CLieosaurus,Not(ATruthoraptor)),
+Implication(CTruthoraptor,ATruthoraptor),
+Implication(ALieosaurus,Not(Or(ATruthoraptor,ALieosaurus))),
+Implication(ATruthoraptor,Or(ATruthoraptor,ALieosaurus))
 )
 
 
